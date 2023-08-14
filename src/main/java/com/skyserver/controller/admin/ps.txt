@@ -1,0 +1,5 @@
+一些注解的解释
++ 当前端传来的是json格式的内容时，才需要添加@RequestBody注解，而请求路径中的数据不需要。
+
++ 分页查询注解@JsonFormat(Pattern="yyyy-MM-dd HH:mm:ss")。原因是LocalDateTime类型的数据，返回给前端时出现数据模式问题。但是该方法不推荐，所有的
+时间都要加上该注解

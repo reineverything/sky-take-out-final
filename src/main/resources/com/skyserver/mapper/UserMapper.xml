@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skyserver.mapper.UserMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into user
+            (openid, name, phone, sex, id_number, avatar, create_time)
+        values (#{openid}, #{name}, #{phone}, #{sex}, #{idNumber}, #{avatar}, #{createTime})
+    </insert>
+
+    <select id="selectByOpenid" resultType="com.skypojo.entity.User">
+        select *
+        from user
+        where openid = #{openid}
+    </select>
+
+    <select id="countAddByCreateTime" resultType="com.skypojo.dto.UserReportDTO">
+        select date_format(create_time,'%Y-%m-%d') createDate,count(*) userCount
+        from user
+        <where>
+            <if test="beginTime !=null and endTime != null">
+                create_time between #{beginTime} and #{endTime}
+            </if>
+        </where>
+        group by date_format(create_time,'%Y-%m-%d')
+        order by date_format(create_time,'%Y-%m-%d')
+    </select>
+
+    <select id="countTotalByCreateTime" resultType="java.lang.Integer">
+        select count(*)
+        from user
+        where create_time &lt; #{beginTime}
+    </select>
+
+    <select id="selectUserCount" resultType="java.lang.Integer">
+        select count(*)
+        from user
+        where create_time &lt; #{end}
+          and create_time &gt; #{begin}
+    </select>
+</mapper>

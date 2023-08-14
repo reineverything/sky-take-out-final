@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skyserver.mapper.ShoppingCartMapper">
+
+    <insert id="insert">
+        insert into shopping_cart (name, image, user_id, dish_id, setmeal_id, dish_flavor, number, amount, create_time)
+        values (#{name}, #{image}, #{userId}, #{dishId}, #{setmealId}, #{dishFlavor}, #{number}, #{amount},
+                #{createTime})
+    </insert>
+
+    <update id="updateNumberById">
+        update shopping_cart
+        set number=#{number}
+        where id = #{id}
+    </update>
+
+    <delete id="clean">
+        delete
+        from shopping_cart
+        where user_id = #{currentId}
+    </delete>
+
+    <delete id="delete">
+        delete
+        from shopping_cart
+        where id = #{id}
+    </delete>
+
+    <!--    动态查询购物车数据，根据dish_id,dish_flavor,setmeal_id动态查询-->
+    <select id="list" resultType="com.skypojo.entity.ShoppingCart">
+        select * from shopping_cart
+        <where>
+            <if test="userId !=null">
+                user_id=#{userId}
+            </if>
+            <if test="dishId !=null">
+                and dish_id=#{dishId}
+            </if>
+            <if test="dishFlavor !=null and dishFlavor !=''">
+                and dish_flavor=#{dishFlavor}
+            </if>
+            <if test="setmealId !=null">
+                and setmeal_id=#{setmealId}
+            </if>
+        </where>
+    </select>
+
+    <select id="listByUserId" resultType="com.skypojo.entity.ShoppingCart">
+        select *
+        from shopping_cart
+        where user_id = #{currentId}
+    </select>
+
+    <select id="get" resultType="com.skypojo.entity.ShoppingCart">
+        select * from shopping_cart
+        <where>
+            <if test="dishId!=null">
+                dish_id=#{dishId}
+            </if>
+            <if test="dishFlavor!=null and dishFlavor!=''">
+                and dish_flavor=#{dishFlavor}
+            </if>
+            <if test="setmealId!=null">
+                and setmeal_id=#{setmealId}
+            </if>
+        </where>
+    </select>
+</mapper>
