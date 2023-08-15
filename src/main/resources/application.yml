@@ -55,12 +55,12 @@ spring:
 # 阿里云
 alioss:
   endpoint: oss-cn-chengdu.aliyuncs.com
-  access-key-id: LTAI5t6ZNkNbZ3FySGffne3i
-  access-key-secret: 9ckX6vIon2HwaRtogzcBk3IurCn2LD
+  access-key-id: 
+  access-key-secret: 
   bucket-name: sky-take-out-rein
 
 # 微信配置
 wechat:
-  appid: wxa3c9b9e44f11d5db
-  secret: 8b2822f26d716a7d6343fb6759df430c
+  appid: 
+  secret: 
 
